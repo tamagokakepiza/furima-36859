@@ -69,6 +69,46 @@ RSpec.describe User, type: :model do
         @user.valid?
         expect(@user.errors.full_messages).to include "Birth day can't be blank"
       end
+      it 'passwordは英字のみでは保存できない' do
+        @user.password = 'aaaaaa'
+        @user.valid?
+        expect(@user.errors.full_messages).to include "Password confirmation doesn't match Password"
+      end
+      it 'password数字のみでは保存できない' do
+        @user.password = '222222'
+        @user.valid?
+        expect(@user.errors.full_messages).to include "Password confirmation doesn't match Password"
+      end
+      it 'password全角英数混合では保存できない' do
+        @user.password = '２２２aaa'
+        @user.valid?
+        expect(@user.errors.full_messages).to include "Password confirmation doesn't match Password"
+      end
+      it 'emailは@含まなければ保存できない' do
+        @user.email = 'aaagmail'
+        @user.valid?
+        expect(@user.errors.full_messages).to include "Email is invalid"
+      end
+      it 'last_nameは全角（漢字・ひらがな・カタカナ）でなければ保存できない' do
+        @user.last_name = 'aaa'
+        @user.valid?
+        expect(@user.errors.full_messages).to include "Last name is invalid"
+      end
+      it 'first_nameは全角（漢字・ひらがな・カタカナ）でなければ保存できない' do
+        @user.first_name = 'aaa'
+        @user.valid?
+        expect(@user.errors.full_messages).to include "First name is invalid"
+      end
+      it 'last_name_kanaは全角（カタカナ）でなければ保存できない' do
+        @user.last_name_kana = 'あああ'
+        @user.valid?
+        expect(@user.errors.full_messages).to include "Last name kana is invalid"
+      end
+      it 'first_name_kanaは全角（カタカナ）でなければ保存できない' do
+        @user.first_name_kana = 'あああ'
+        @user.valid?
+        expect(@user.errors.full_messages).to include "First name kana is invalid"
+      end
     end
   end
 end
