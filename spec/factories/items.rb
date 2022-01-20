@@ -11,6 +11,6 @@ FactoryBot.define do
     area_id                {2}
     scheduled_id           {2}
     price                  {Faker::Number.within(range: 300..9999999)}
-    user_id                {1}
+    association :user
   end
 end

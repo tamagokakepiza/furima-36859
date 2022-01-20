@@ -19,11 +19,6 @@ class ItemsController < ApplicationController
   end
 
   private
-  def move_to_index
-    unless user_signed_in?
-      redirect_to new_user_session_path
-    end
-  end
   def item_params
     params.require(:item).permit(:item_name, :content, :image, :category_id, :condition_id, :delivery_id, :area_id, :scheduled_id, :price).merge(user_id: current_user.id)
   end
