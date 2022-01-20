@@ -7,10 +7,11 @@ class Item < ApplicationRecord
   belongs_to :area
   belongs_to :scheduled
   validates :image, :item_name, :content, :price, presence: true
-  validates :price, numericality: {less_than_or_equal_to: 9999999, greater_than_or_equal_to: 300}
+  validates :price, numericality: {less_than_or_equal_to: 9999999, greater_than_or_equal_to: 300, only_integer: true}
   validates :category_id, numericality: { other_than: 1 , message: "can't be blank"}
   validates :condition_id, numericality: { other_than: 1 , message: "can't be blank"}
   validates :delivery_id, numericality: { other_than: 1 , message: "can't be blank"}
   validates :area_id, numericality: { other_than: 1 , message: "can't be blank"}
   validates :scheduled_id, numericality: { other_than: 1 , message: "can't be blank"}
+  validates :user_id, {presence: true}
 end

@@ -2,7 +2,6 @@ require 'rails_helper'
 RSpec.describe Item, type: :model do
   before do
     @item = FactoryBot.build(:item)
-    @item.image = fixture_file_upload('app/assets/images/item-sample.png')
   end
 
   describe '商品出品' do
@@ -12,65 +11,70 @@ RSpec.describe Item, type: :model do
       end
     end
     context '商品出品できない時' do
-      it 'imageが空では登録できない' do
+      it 'imageが空では出品できない' do
         @item.image = nil
         @item.valid?
         expect(@item.errors.full_messages).to include "Image can't be blank"
       end
-      it 'item_nameが空では登録できない' do
+      it 'item_nameが空では出品できない' do
         @item.item_name = ''
         @item.valid?
         expect(@item.errors.full_messages).to include "Item name can't be blank"
       end
-      it 'contentが空では登録できない' do
+      it 'contentが空では出品できない' do
         @item.content = ''
         @item.valid?
         expect(@item.errors.full_messages).to include "Content can't be blank"
       end
-      it 'categoryが空白では登録できない' do
+      it 'categoryが空白では出品できない' do
         @item.category_id = 1
         @item.valid?
         expect(@item.errors.full_messages).to include "Category can't be blank"
       end
-      it 'conditionが空白では登録できない' do
+      it 'conditionが空白では出品できない' do
         @item.condition_id = 1
         @item.valid?
         expect(@item.errors.full_messages).to include "Condition can't be blank"
       end
-      it 'deliveryが空白では登録できない' do
+      it 'deliveryが空白では出品できない' do
         @item.delivery_id = 1
         @item.valid?
         expect(@item.errors.full_messages).to include "Delivery can't be blank"
       end
-      it 'areaが空白では登録できない' do
+      it 'areaが空白では出品できない' do
         @item.area_id = 1
         @item.valid?
         expect(@item.errors.full_messages).to include "Area can't be blank"
       end
-      it 'scheduledが空白では登録できない' do
+      it 'scheduledが空白では出品できない' do
         @item.scheduled_id = 1
         @item.valid?
         expect(@item.errors.full_messages).to include "Scheduled can't be blank"
       end
-      it 'priceが空白では登録できない' do
+      it 'priceが空白では出品できない' do
         @item.price = nil
         @item.valid?
         expect(@item.errors.full_messages).to include "Price can't be blank"
       end
-      it 'priceが¥300より低いと登録できない' do
+      it 'priceが¥300より低いと出品できない' do
         @item.price = 299
         @item.valid?
         expect(@item.errors.full_messages).to include "Price must be greater than or equal to 300"
       end
-      it 'priceが¥9,999,999より高いと登録できない' do
+      it 'priceが¥9,999,999より高いと出品できない' do
         @item.price = 10000000
         @item.valid?
         expect(@item.errors.full_messages).to include "Price must be less than or equal to 9999999"
       end
-      it 'priceは半角数値でないと登録できない' do
+      it 'priceは半角数値でないと出品できない' do
         @item.price = '５００'
         @item.valid?
         expect(@item.errors.full_messages).to include "Price is not a number"
+      end
+      it 'userが紐付いていなければ出品できない' do
+        @item.user_id = nil
+        @item.valid?
+        expect(@item.errors.full_messages).to include "User can't be blank"
       end
     end
   end

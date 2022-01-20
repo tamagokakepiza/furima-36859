@@ -1,8 +1,8 @@
 class ItemsController < ApplicationController
-  before_action :move_to_index, only: [:new, :create]
+  before_action :authenticate_user!, only: [:new, :create]
 
   def index
-    @items = Item.all
+    # @items = Item.all
   end
 
   def new
