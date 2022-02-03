@@ -23,7 +23,7 @@ class ItemsController < ApplicationController
   end
 
   def edit
-    redirect_to root_path unless @item.user_id == current_user.id
+    redirect_to root_path if @item.user_id != current_user.id || Purchase.includes(:item).find_by(item_id: @item.id)
   end
 
   def update
