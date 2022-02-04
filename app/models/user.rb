@@ -5,7 +5,8 @@ class User < ApplicationRecord
   has_many :purchases
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
-  VALID_PASSWORD_REGEX = /\A(?=.*?[a-z])(?=.*?\d)[a-z\d]+\z/i.freeze
+  PASSWORD_REGEX = /\A(?=.*?[a-z])(?=.*?[\d])[a-z\d]+\z/i.freeze
+  validates_format_of :password, with: PASSWORD_REGEX, message: 'is invalid'
   validates :nickname, presence: true
   validates :last_name, presence: true, format: { with: /\A[ぁ-んァ-ン一-龥]/ }
   validates :first_name, presence: true, format: { with: /\A[ぁ-んァ-ン一-龥]/ }
